@@ -3,4 +3,4 @@
 This repository is for practicing algorithms.
 
 ## Repo
-* GitHub repository: holbertonschool-web_front_end
+* GitHub repository: holbertonschool-interview
