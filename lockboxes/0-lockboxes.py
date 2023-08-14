@@ -21,11 +21,12 @@ def canUnlockAll(boxes):
 
     while queue:
         popped_key = queue.pop(0)
-        if popped_key not in opened_boxes:
+        # popped_keyがboxesのlengthをこえていないかチェック（IndexError回避）
+        if popped_key not in opened_boxes and 0 <= popped_key < length:
             opened_boxes.add(popped_key)
             collected_keys = list(boxes[popped_key])
             for key in collected_keys:
-                if key not in opened_boxes:
+                if key not in opened_boxes and key not in queue:
                     queue.append(key)
 
     box_list = set(range(length))
