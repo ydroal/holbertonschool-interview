@@ -37,32 +37,47 @@ heap_t *heapify_up(heap_t *node)
  * Return: pointer to the inserted node, or NULL on failure
  */
 
+/* 配列 (queue）を用いて幅優先探索（BFS）を行う */
 heap_t *find_insert_node(heap_t **root, int value)
 {
-	binary_tree_t *node = *root;
+	heap_t *current = NULL;
+	heap_t *queue[1024]; /* 構造体へのポインタの配列 */
+	int start = 0; /* キューの先頭インデックス */
+	int end = 0; /* キューの末尾インデックス */
 
-	/* 左の子がいない場合*/
-	if (node->left == NULL)
-	{
-		node->left = binary_tree_node(node, value);
-		return (node->left);
-	}
-	else if (node->right == NULL)
-	{
-		node->right = binary_tree_node(node, value);
-		return (node->right);
-	}
-	else
-	{
-		binary_tree_t *new_node;
+	if (!root || !*root)
+		return (NULL);
 
-		new_node = find_insert_node(&(node->left), value);
-		if (new_node == NULL)
+	/* rootをキューに追加 */
+	queue[end++] = *root;
+
+	while (start < end)
+	{
+		current = queue[start++];
+		/* 左の子がいない場合はそこに挿入 */
+		if (!current->left)
 		{
-			new_node = find_insert_node(&(node->right), value);
+			current->left = binary_tree_node(current, value);
+			return (current->left);
 		}
-		return (new_node);
+		else /* 探索キューに左の子ノードを追加 */
+		{
+			queue[end++] = current->left;
+		}
+
+		/* 右の子がいない場合はそこに挿入 */
+		if (!current->right)
+		{
+			current->right = binary_tree_node(current, value);
+			return (current->right);
+		}
+		else /* 探索キューに右の子ノードを追加 */
+		{
+			queue[end++] = current->right;
+		}
 	}
+
+	return (NULL); /* ここに到達することはない*/
 }
 
 /**
