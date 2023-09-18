@@ -23,7 +23,7 @@ int is_palindrome(listint_t **head)
 		length++;
 	}
 	push_limit = length / 2;
-	stack = (int *)malloc(length * sizeof(int));  /* メモリ領域の確保 */
+	stack = (int *)malloc(push_limit * sizeof(int));  /* メモリ領域の確保 */
 	if (stack == NULL)
 		return (0);
 
