@@ -1,4 +1,4 @@
-# LockboxesLog Parsing
+# Log Parsing
 
 ## Requirements
 
