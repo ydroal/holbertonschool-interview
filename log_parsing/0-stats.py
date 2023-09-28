@@ -1,18 +1,17 @@
 #!/usr/bin/python3
-"""Module to read from stdin and compute metrics"""
+""" Reads stdin line by line and computes metrics """
 import sys
 
 
 def parse_line(line):
     """
-    Parses a line of log input.
-
+    Parses a line of log input
     Args:
-    line (str): line from the input logs.
+    line (str): line from the input logs
 
     Returns:
-    tuple: A tuple containing the IP address, request type,
-        status code, and file size.
+    tuple: A tuple containing the log infos
+
     """
     try:
         ip = line.split(' - ')[0]
@@ -23,17 +22,14 @@ def parse_line(line):
         return ip, request, status, size
     except Exception:
         return None, None, None, None
-    
-    
+
+
 if __name__ == "__main__":
     total_size = 0
     status_codes = {'200': 0, '301': 0,
                     '400': 0, '401': 0,
                     '403': 0, '404': 0,
                     '405': 0, '500': 0}
-
-
-
 
     try:
         count = 0
@@ -51,7 +47,7 @@ if __name__ == "__main__":
                 for code, times in sorted(status_codes.items()):
                     if times:
                         print(f'{code}: {times}')
-                
+
     except KeyboardInterrupt:
         pass
 
