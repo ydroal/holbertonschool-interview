@@ -15,13 +15,8 @@ def parse_line(line):
         status code, and file size.
     """
     try:
-        # IPアドレスを取得
         ip = line.split(' - ')[0]
-
-        # "GET /projects/260 HTTP/1.1" の部分を取得
         request = line.split("\"")[1]
-
-        # ステータスコードとサイズを取得
         status_size = line.split()[-2:]
         status, size = status_size
 
@@ -41,7 +36,7 @@ if __name__ == "__main__":
 
 
     try:
-        count = 0  # 行カウント
+        count = 0
         for line in sys.stdin:
             count += 1
 
