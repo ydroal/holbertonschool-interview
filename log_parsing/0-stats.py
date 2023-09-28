@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-'''Module to read from stdin and compute metrics'''
+"""Module to read from stdin and compute metrics"""
 import sys
 
 total_size = 0
@@ -10,7 +10,8 @@ status_codes = {'200': 0, '301': 0,
 
 
 def parse_line(line):
-    '''Parses a line of log input.
+    """
+    Parses a line of log input.
 
     Args:
     line (str): line from the input logs.
@@ -18,7 +19,7 @@ def parse_line(line):
     Returns:
     tuple: A tuple containing the IP address, request type,
            status code, and file size.
-    '''
+    """
     try:
         # IPアドレスを取得
         ip = line.split(' - ')[0]
