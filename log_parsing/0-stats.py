@@ -35,10 +35,10 @@ if __name__ == "__main__":
                 status_codes[status] += 1
 
             if count % 10 == 0:
-                print(f'File size: {total_size}')
+                print('File size: {}'.format(total_size))
                 for code, times in sorted(status_codes.items()):
                     if times:
-                        print(f'{code}: {times}')
+                        print('{}: {}'.format(code, times))
 
     except KeyboardInterrupt:
         pass
@@ -47,4 +47,4 @@ if __name__ == "__main__":
         print(f'File size: {total_size}')
         for code, times in sorted(status_codes.items()):
             if times:
-                print(f'{code}: {times}')
+                print('{}: {}'.format(code, times))
