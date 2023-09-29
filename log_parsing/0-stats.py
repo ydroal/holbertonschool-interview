@@ -1,18 +1,10 @@
 #!/usr/bin/python3
-""" Reads stdin line by line and computes metrics """
+""" Module to read from stdin and compute metrics """
 import sys
 
 
 def parse_line(line):
-    """
-    Parses a line of log input
-    Args:
-    line (str): line from the input logs
-
-    Returns:
-    tuple: A tuple containing the log infos
-
-    """
+    """ Parses a line of log input """
     try:
         ip = line.split(' - ')[0]
         request = line.split("\"")[1]
