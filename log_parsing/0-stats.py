@@ -44,7 +44,7 @@ if __name__ == "__main__":
         pass
 
     finally:
-        print(f'File size: {total_size}')
+        print('File size: {}'.format(total_size))
         for code, times in sorted(status_codes.items()):
             if times:
                 print('{}: {}'.format(code, times))
