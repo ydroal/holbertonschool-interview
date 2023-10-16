@@ -14,21 +14,21 @@ def validUTF8(data):
     Returns:
     bool: True if data is a valid UTF-8 encoding, else return False
     """
-    n_bytes = 0
+    n_bytes = 0  # 連続するバイトの数
 
     for num in data:
+        num &= 0xFF
         binary = format(num, '08b')
 
         if n_bytes == 0:
-
             if binary[0] == '0':
                 continue
             elif binary.startswith('110'):
-                n_bytes = 2
+                n_bytes = 1
             elif binary.startswith('1110'):
-                n_bytes = 3
+                n_bytes = 2
             elif binary.startswith('11110'):
-                n_bytes = 4
+                n_bytes = 3
             else:
                 return False  # 有効なUTF-8バイトパターンではない
         else:
