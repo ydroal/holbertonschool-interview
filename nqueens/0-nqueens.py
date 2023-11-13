@@ -62,7 +62,7 @@ def solveNQ():
         sys.exit(1)
 
     if int(args[1]) < 4:
-        print(' N must be at least 4')
+        print('N must be at least 4')
         exit(1)
 
     solutions = []
