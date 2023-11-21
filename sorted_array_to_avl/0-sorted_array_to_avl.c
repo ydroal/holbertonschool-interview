@@ -9,7 +9,9 @@
  */
 binary_tree_t *create_node(binary_tree_t *parent, int value)
 {
-	binary_tree_t *node = malloc(sizeof(binary_tree_t));
+	binary_tree_t *node;
+
+	node = malloc(sizeof(binary_tree_t));
 
 	if (!node)
 		return (NULL);
@@ -34,11 +36,14 @@ binary_tree_t *create_node(binary_tree_t *parent, int value)
 binary_tree_t *insert_node(int *array, binary_tree_t *parent,
 	 int start, int end)
 {
+	int mid;
+	binary_tree_t *root;
+
 	if (start > end)
 		return (NULL);
 
-	int mid = (start + end) / 2;
-	binary_tree_t *root = create_node(parent, array[mid]);
+	mid = (start + end) / 2;
+	root = create_node(parent, array[mid]);
 
 	if (!root)
 		return (NULL);
