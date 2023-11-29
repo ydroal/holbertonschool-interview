@@ -31,6 +31,25 @@ void set_express_lanes(skiplist_t *list, size_t size)
 }
 
 /**
+ * get_length - Get the number of node
+ * @list: pointer to the head of the skiplist
+ *
+ * Return: The number of node in skiplist
+ */
+
+size_t get_length(skiplist_t *list)
+{
+	size_t size = 0;
+
+	while (list)
+	{
+		size++;
+		list = list->next;
+	}
+	return (size);
+}
+
+/**
  * linear_skip - Searches for a value in a sorted skip list of integers
  * @head: pointer to the head of the skiplist
  * @value: pointer to the head of the skiplist
@@ -41,17 +60,10 @@ skiplist_t *linear_skip(skiplist_t *head, int value)
 {
 	if (!head)
 		return (NULL);
-
 	skiplist_t *list = head;
-	size_t size = 0;
+	size_t size = get_length(list);
 
-	while (list)
-	{
-		size++;
-		list = list->next;
-	}
 	set_express_lanes(head, size);
-
 	skiplist_t *node = head->express;
 	skiplist_t *prev = head;
 
@@ -63,9 +75,14 @@ skiplist_t *linear_skip(skiplist_t *head, int value)
 		if (node->n > value)
 			break;
 		prev = node;
+		if (node->express == NULL)
+		{
+			while (node->next)
+				node = node->next;
+			break;
+		}
 		node = node->express;
 	}
-
 	if (node)
 		printf("Value found between indexes [%lu] and [%lu]\n",
 		prev->index, node->index);
