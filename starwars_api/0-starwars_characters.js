@@ -1,9 +1,10 @@
 #!/usr/bin/node
+#!/root/.nvm/versions/node/v10.14.2/bin/node
 const request = require('request');
 
 const movieId = process.argv[2];
 
-async function getCharacter(url) {
+async function getCharacter (url) {
   return new Promise((resolve, reject) => {
     request.get(url, { json: true }, (error, response, body) => {
       if (error) {
@@ -15,7 +16,7 @@ async function getCharacter(url) {
   });
 }
 
-async function getCharacters(urls) {
+async function getCharacters (urls) {
   for (const url of urls) {
     try {
       const name = await getCharacter(url);
@@ -27,11 +28,10 @@ async function getCharacters(urls) {
 }
 
 request.get(`https://swapi-api.hbtn.io/api/films/${movieId}/`,
- { json: true }, async (error, response, body) => {
-  if (error) {
-    return console.error(error);
-  }
-  let urls = body.characters;
-  await getCharacters(urls);
-});
-
+  { json: true }, async (error, response, body) => {
+    if (error) {
+      return console.error(error);
+    }
+    const urls = body.characters;
+    await getCharacters(urls);
+  });
