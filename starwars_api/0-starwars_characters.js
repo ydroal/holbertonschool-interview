@@ -1,5 +1,4 @@
 #!/usr/bin/node
-#!/root/.nvm/versions/node/v10.14.2/bin/node
 const request = require('request');
 
 const movieId = process.argv[2];
