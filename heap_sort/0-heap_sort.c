@@ -61,8 +61,9 @@ void down_to_leaf(int *array, size_t array_size, size_t size, size_t index)
 void build_heap(int *array, size_t size)
 {
 	size_t array_size = size;
+	int i;
 	/* ヒープの初期化 */
-	for (int i = (size / 2) - 1; i >= 0; i--)
+	for (i = (size / 2) - 1; i >= 0; i--)
 		down_to_leaf(array, array_size, size, i);
 }
 
