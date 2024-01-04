@@ -41,29 +41,18 @@ int  search_recursion(int *array, int low, int hight, int value)
 	if (hight >= low)
 	{
 		mid = low + (hight - low) / 2;
-		if (array[mid] == value)
+		print_array(array, low, hight);
+
+		if (array[mid] >= value)
 		{
-			if (mid == low || array[mid - 1] != value)
+			if (array[mid] == value && (mid == low || array[mid - 1] != value))
 			{
-				print_array(array, low, hight);
 				return (mid);
 			}
-			else
-			{
-				print_array(array, low, hight);
-				return (search_recursion(array, low, mid, value));
-			}
+			return (search_recursion(array, low, mid, value));
 		}
-
-		if (array[mid] > value)
-		{
-			print_array(array, low, hight);
-			return (search_recursion(array, low, mid - 1, value));
-		}
-		print_array(array, low, hight);
 		return (search_recursion(array, mid + 1, hight, value));
 	}
-
 	return (-1);
 }
 
