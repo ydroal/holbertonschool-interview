@@ -5,7 +5,7 @@ count_words Module
 import requests
 
 
-def rec_count_words(subreddit, word_list, after, result={}):
+def rec_count_words(subreddit, word_list, after, result=None):
     """
     A recursive function that queries the Reddit API, parses the title of
     all hot articles, and prints a sorted count of given keywords.
@@ -14,8 +14,11 @@ def rec_count_words(subreddit, word_list, after, result={}):
         word_list (List[str]): A list of keywords for which occurrences
                                in titles are to be counted.
     Returns:
-        None: This function does not return anything.
+        dict: A dictionary containing the word counts.
     """
+
+    if result is None:
+        result = {}
 
     url = 'https://www.reddit.com/r/{}/hot.json'.format(subreddit)
     headers = {'User-Agent': 'Countup/0.1'}
@@ -25,28 +28,21 @@ def rec_count_words(subreddit, word_list, after, result={}):
 
     if res.status_code != 200:
         print('Error fetching data: HTTP {}'.format(res.status_code))
-        return
+        return result
 
-    if res.status_code == 200:
-        res_data = res.json()
-        posts = res_data['data']['children']
-        for post in posts:
-            title = post['data']['title'].lower().split()
-            for word in word_list:
-                if word in title:
-                    if word in result:
-                        result[word] += 1
-                    else:
-                        result[word] = 1
+    res_data = res.json()
+    posts = res_data['data']['children']
+    for post in posts:
+        title = post['data']['title'].lower().split()
+        for word in word_list:
+            if word in title:
+                result[word] = result.get(word, 0) + 1
 
-    # ページネーション処理
     after = res_data['data'].get('after')
     if after is not None:
-        rec_count_words(subreddit, word_list, after, result)
+        return rec_count_words(subreddit, word_list, after, result)
     else:
-        sorted_result = sorted(result.items(), key=lambda x: (-x[1], x[0]))
-        for word, count in sorted_result:
-            print('{}: {}'.format(word, count))
+        return result
 
 
 def count_words(subreddit, word_list):
@@ -58,9 +54,13 @@ def count_words(subreddit, word_list):
                                titles are to be counted.
 
     Returns:
-        None: Return value of rec_count_words function (print a result)
+        None: Not return anything.
     """
     after = ''
-    result = {}
     keyword_list = [item.lower() for item in word_list]
-    return rec_count_words(subreddit, keyword_list, after, result)
+    result = rec_count_words(subreddit, keyword_list, after, result=None)
+
+    if result:
+        sorted_result = sorted(result.items(), key=lambda x: (-x[1], x[0]))
+        for word, count in sorted_result:
+            print('{}: {}'.format(word, count))
