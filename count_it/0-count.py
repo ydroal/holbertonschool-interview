@@ -31,8 +31,7 @@ def rec_count_words(subreddit, word_list, after, result=None):
         )
 
     if res.status_code != 200:
-        print('Error fetching data: HTTP {}'.format(res.status_code))
-        return result
+        return None
 
     res_data = res.json()
     posts = res_data['data']['children']
