@@ -24,7 +24,11 @@ def rec_count_words(subreddit, word_list, after, result=None):
     headers = {'User-Agent': 'Countup/0.1'}
     params = {'limit': 20, 'after': after}
 
-    res = requests.get(url, headers=headers, params=params)
+    res = requests.get(
+        url, headers=headers,
+        params=params,
+        allow_redirects=False
+        )
 
     if res.status_code != 200:
         print('Error fetching data: HTTP {}'.format(res.status_code))
