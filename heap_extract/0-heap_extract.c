@@ -52,27 +52,33 @@ heap_t *find_last_node(heap_t *root)
 
 void heapify_down(heap_t *node)
 {
+	heap_t *largest_child;
+	int temp;
+
 	if (node == NULL)
-	return;
+		return;
+
 
 	while (node->left != NULL)
 	{
-		heap_t *largest_child = node->left;
+		largest_child = node->left;
+
 
 		if (node->right != NULL && node->right->n > node->left->n)
 			largest_child = node->right;
-	}
 
-	if (largest_child->n > node->n)
-	{
-		int temp = node->n;
+		if (largest_child->n > node->n)
+		{
+			temp = node->n;
 
-		node->n = largest_child->n;
-		largest_child->n = temp;
-		node = largest_child;
-	} else
-	{
-		break;
+			node->n = largest_child->n;
+			largest_child->n = temp;
+
+			node = largest_child;
+		} else
+		{
+			break;
+		}
 	}
 }
 
