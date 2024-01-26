@@ -19,48 +19,6 @@ int _strlen(char *s)
 }
 
 /**
- * handle_carry - Handles the carryover for each digit of the multiplication
- * result and expands memory if it need
- * @result: Pointer to the array storing of the multiplication result
- * @len1: The length of the first multiplicand.
- * @len2: The length of the second multiplicand.
- * Return: 1 - if a carryover exists in the highest digit, 0 - otherwise
- */
-int handle_carry(int *result, int len1, int len2)
-{
-	/* 繰り上がりを処理する */
-	int i;
-	int carry = 0;
-
-	for (i = 0; i < len1 + len2 - 1; i++)
-	{
-		result[i] += carry;
-		carry = result[i] / 10;
-		result[i] %= 10;
-	}
-
-	/* 最高位に桁上がりがあれば、メモリ拡張して桁を追加 */
-	if (carry > 0)
-	{
-		/* 新たなメモリを確保 */
-		int *temp = malloc((len1 + len2) * sizeof(int));
-		/* resultの内容をtempにコピー */
-		for (i = 0; i < len1 + len2 - 1; i++)
-		{
-			temp[i] = result[i];
-		}
-		/* 最高位に繰り上がりを設定 */
-		temp[len1 + len2 - 1] = carry;
-		/* 古いメモリを解放して新しいメモリをresultに設定 */
-		free(result);
-		result = temp;
-		return (1);
-	}
-	return (0);
-}
-
-
-/**
  * multiply - Multiplies two large numbers represented as strings
  * @num1: The first number
  * @num2: The second number
@@ -71,35 +29,41 @@ void multiply(char *num1, char *num2)
 	int len1 = _strlen(num1);
 	int len2 = _strlen(num2);
 	int *result;
-	int i, j;
+	int i, j, mul, carry;
 
-	result = malloc((len1 + len2 - 1) * sizeof(int));
+	result = malloc((len1 + len2) * sizeof(int));
 	for (i = 0; i < len1 + len2 - 1; i++)
 	{
 		result[i] = 0;
 	}
 
 	/* 各桁を掛け合わせる */
-	for (i = 0; i < len1; i++)
+	for (i = len1 - 1; i >= 0; i--)
 	{
-		for (j = 0; j < len2; j++)
-			{
-				result[i + j] += (num1[i] - '0') * (num2[j] - '0');
-			}
+		carry = 0;
+		for (j = len2 - 1; j >= 0; j--)
+		{
+			mul = (num1[i] - '0') * (num2[j] - '0');
+			carry += result[i + j + 1] + mul; /* インデックスを修正 */
+			result[i + j + 1] = carry % 10;
+			carry /= 10;
+		}
+		result[i + j + 1] += carry; /* キャリーを加算 */
 	}
 
-	int carry_over = handle_carry(result, len1, len2);
+	/* 先頭の0をスキップして出力 */
+	i = 0;
+	while (i < len1 + len2 - 1 && result[i] == 0)
+		i++;
 
-	/* 結果を出力 */
-	int end = carry_over ? len1 + len2 - 1 : len1 + len2 - 2;
-
-	for (i = 0; i <= end; i++)
+	for (; i < len1 + len2; i++)
 	{
 		_putchar(result[i] + '0');
 	}
 	_putchar('\n');
 	free(result);
 }
+
 
 /**
  * _isdigit - Checks if a string is composed only of digits
