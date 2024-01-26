@@ -32,7 +32,7 @@ void multiply(char *num1, char *num2)
 	int i, j, mul, carry;
 
 	result = malloc((len1 + len2) * sizeof(int));
-	for (i = 0; i < len1 + len2 - 1; i++)
+	for (i = 0; i < len1 + len2; i++)
 	{
 		result[i] = 0;
 	}
@@ -63,7 +63,6 @@ void multiply(char *num1, char *num2)
 	_putchar('\n');
 	free(result);
 }
-
 
 /**
  * _isdigit - Checks if a string is composed only of digits
