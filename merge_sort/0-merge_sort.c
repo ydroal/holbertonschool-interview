@@ -15,9 +15,9 @@ void merge(int *array, int *tmp, int start, int mid, int end)
 
 	printf("Merging...\n");
 	printf("[left]: ");
-	print_array(array + start, mid - start + 1); /* 左サブ配列の表示 */
+	print_array(array + start, mid - start + 1);
 	printf("[right]: ");
-	print_array(array + mid + 1, end - mid); /* 右サブ配列の表示 */
+	print_array(array + mid + 1, end - mid);
 
 	/* 一時配列tmpにサブ配列の要素をコピー */
 	i = start;
@@ -55,23 +55,18 @@ void merge(int *array, int *tmp, int start, int mid, int end)
  * @start:　Start index of the array to be processed
  * @end: End index of the array to be processed
  */
-void recursive_merge(int *array, int start, int end)
+void recursive_merge(int *array, int *tmp, int start, int end)
 {
 	int mid;
-	int *tmp;
 
 	if (start < end)
 	{
 		mid = (start + end) / 2;
-		recursive_merge(array, start, mid);
-		recursive_merge(array, mid + 1, end);
-		tmp = malloc(sizeof(int) * (end - start + 1));
-		if (!tmp)
-			return;
+		recursive_merge(array, tmp, start, mid);
+		recursive_merge(array, tmp, mid + 1, end);
 
 		/* merge関数を使用して、二つのサブ配列をマージ */
 		merge(array, tmp, start, mid, end);
-		free(tmp);
 	}
 }
 
@@ -85,8 +80,15 @@ void recursive_merge(int *array, int start, int end)
 
 void merge_sort(int *array, size_t size)
 {
+	int *tmp;
+
 	if (size >= 2)
 	{
-		recursive_merge(array, 0, size - 1);
+		tmp = malloc(sizeof(int) * size);
+		if (!tmp)
+			return;
+
+		recursive_merge(array, tmp, 0, size - 1);
+		free(tmp);
 	}
 }
