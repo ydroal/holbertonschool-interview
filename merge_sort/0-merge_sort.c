@@ -51,7 +51,7 @@ void merge(int *array, int *tmp, int start, int mid, int end)
  *  using the Merge Sort algorithm
  *
  * @array: The array to be sorted
- * @size: Number of elements in @array
+ * @tmp: Temporary array for merging
  * @start:　Start index of the array to be processed
  * @end: End index of the array to be processed
  */
