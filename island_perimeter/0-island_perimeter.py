@@ -1,11 +1,19 @@
 #!/usr/bin/python3
 '''
-This module is a script to calculete the perimeter of
-the island described in grid.
+0-island_perimeter
 '''
 
 
 def island_perimeter(grid):
+    """
+    calculete the perimeter of the island described in grid
+
+    Args:
+        grid (list): Alist of list of integers
+    Returns:
+        bool: the perimeter of the island
+    """
+
     rows = len(grid)
     cols = len(grid[0]) if rows else 0
     perimeter = 0
