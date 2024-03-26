@@ -31,7 +31,7 @@ int is_bst(const binary_tree_t *tree, const binary_tree_t *min,
 	 const binary_tree_t *max)
 {
 	if (tree == NULL)
-		return (0);
+		return (1);
 
 	if (min != NULL && tree->n <= min->n)
 		return (0);
@@ -59,7 +59,8 @@ int binary_tree_is_avl(const binary_tree_t *tree)
 	if (balance_factor > 1)
 		return (0);
 
-	if (!binary_tree_is_avl(tree->left) || !binary_tree_is_avl(tree->right))
+	if ((tree->left && !binary_tree_is_avl(tree->left)) ||
+		(tree->right && !binary_tree_is_avl(tree->right)))
 		return (0);
 
 	return (is_bst(tree, NULL, NULL));
