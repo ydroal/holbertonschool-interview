@@ -10,6 +10,8 @@
 
 int regex_match(char const *str, char const *pattern)
 {
+	int first_match;
+
 	if (!*pattern)
 	{
 		if (!*str)
@@ -19,7 +21,7 @@ int regex_match(char const *str, char const *pattern)
 		return (0);
 	};
 
-	int first_match = *str && (*pattern == '.' || *pattern == *str);
+	first_match = *str && (*pattern == '.' || *pattern == *str);
 
 	if (*(pattern + 1) == '*')
 		return (regex_match(str, pattern + 2) ||
